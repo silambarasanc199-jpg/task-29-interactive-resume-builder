@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Resume Builder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div>
+    <span class="status-dot"></span>
+    <span class="brand">RESUME_BUILDER</span>
+  </div>
+
+  <button onclick="window.print()" class="print-btn">
+    PRINT / PDF
+  </button>
+</header>
+
+<main class="app">
+
+  <!-- EDITOR -->
+  <section class="editor">
+
+    <div class="section-heading">
+      <span>01</span>
+      <div>
+        <h1>Resume Builder</h1>
+        <p>Enter your details and preview your resume live.</p>
+      </div>
+    </div>
+
+    <!-- PERSONAL -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>PERSONAL INFORMATION</span>
+        <small>01</small>
+      </div>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Full Name</label>
+          <input id="name" type="text" placeholder="Your full name">
+        </div>
+
+        <div class="field">
+          <label>Professional Title</label>
+          <input id="title" type="text" placeholder="e.g. AI & Data Science Student">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="email" type="email" placeholder="your@email.com">
+        </div>
+
+        <div class="field">
+          <label>Phone</label>
+          <input id="phone" type="tel" placeholder="+91 XXXXX XXXXX">
+        </div>
+
+        <div class="field">
+          <label>Location</label>
+          <input id="location" type="text" placeholder="City, India">
+        </div>
+
+        <div class="field">
+          <label>LinkedIn</label>
+          <input id="linkedin" type="text" placeholder="linkedin.com/in/username">
+        </div>
+
+        <div class="field">
+          <label>GitHub</label>
+          <input id="github" type="text" placeholder="github.com/username">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>PROFESSIONAL SUMMARY</span>
+        <small>02</small>
+      </div>
+
+      <textarea
+        id="summary"
+        rows="5"
+        placeholder="Write a short professional summary..."
+      ></textarea>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="panel">
+
+      <div class="panel-title">
+        <span>EDUCATION</span>
+        <button class="add-btn" onclick="addEducation()">+ ADD</button>
+      </div>
+
+      <div id="educationContainer">
+
+        <div class="dynamic-card education-item">
+
+          <button class="remove-btn" onclick="removeItem(this)">×</button>
+
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Degree / Course</label>
+              <input class="edu-degree" type="text" placeholder="B.Tech AI & DS">
+            </div>
+
+            <div class="field">
+              <label>Institution</label>
+              <input class="edu-school" type="text" placeholder="College Name">
+            </div>
+
+            <div class="field">
+              <label>Year</label>
+              <input class="edu-year" type="text" placeholder="2024 - 2028">
+            </div>
+
+            <div class="field">
+              <label>Score</label>
+              <input class="edu-score" type="text" placeholder="CGPA / Percentage">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="panel">
+
+      <div class="panel-title">
+        <span>EXPERIENCE</span>
+        <button class="add-btn" onclick="addExperience()">+ ADD</button>
+      </div>
+
+      <div id="experienceContainer">
+
+        <div class="dynamic-card experience-item">
+
+          <button class="remove-btn" onclick="removeItem(this)">×</button>
+
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Role</label>
+              <input class="exp-role" type="text" placeholder="Web Development Intern">
+            </div>
+
+            <div class="field">
+              <label>Company</label>
+              <input class="exp-company" type="text" placeholder="Company Name">
+            </div>
+
+            <div class="field">
+              <label>Duration</label>
+              <input class="exp-duration" type="text" placeholder="Aug 2026 - Sep 2026">
+            </div>
+
+            <div class="field full">
+              <label>Description</label>
+              <textarea
+                class="exp-description"
+                rows="3"
+                placeholder="Describe your work..."
+              ></textarea>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="panel">
+
+      <div class="panel-title">
+        <span>SKILLS</span>
+        <small>05</small>
+      </div>
+
+      <textarea
+        id="skills"
+        rows="3"
+        placeholder="Python, Java, C, HTML, CSS, JavaScript"
+      ></textarea>
+
+      <p class="hint">Separate skills using commas.</p>
+
+    </div>
+
+    <div class="actions">
+      <button class="primary-btn" onclick="window.print()">
+        Generate PDF
+      </button>
+
+      <button class="secondary-btn" onclick="clearResume()">
+        Clear
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- PREVIEW -->
+  <section class="preview-area">
+
+    <div class="preview-header">
+      <span>LIVE PREVIEW</span>
+      <span class="live"><i></i> LIVE</span>
+    </div>
+
+    <article id="resumePreview" class="resume">
+
+      <header class="resume-head">
+
+        <h2 id="previewName">YOUR NAME</h2>
+
+        <p id="previewTitle">Professional Title</p>
+
+        <div class="contact-line">
+          <span id="previewEmail">email@example.com</span>
+          <span id="previewPhone">+91 XXXXX XXXXX</span>
+          <span id="previewLocation">City, India</span>
+        </div>
+
+        <div class="links">
+          <span id="previewLinkedin"></span>
+          <span id="previewGithub"></span>
+        </div>
+
+      </header>
+
+      <section class="resume-section">
+        <h3>PROFILE</h3>
+        <p id="previewSummary">
+          Your professional summary will appear here.
+        </p>
+      </section>
+
+      <section class="resume-section">
+        <h3>EDUCATION</h3>
+        <div id="previewEducation">
+          <p class="empty">Education details will appear here.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h3>EXPERIENCE</h3>
+        <div id="previewExperience">
+          <p class="empty">Experience details will appear here.</p>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h3>SKILLS</h3>
+        <div id="previewSkills" class="skill-list">
+          <span class="empty">Skills will appear here.</span>
+        </div>
+      </section>
+
+    </article>
+
+  </section>
+
+</main>
+
+<footer>
+  INTERACTIVE RESUME BUILDER • HTML5 • CSS3 • JAVASCRIPT
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
